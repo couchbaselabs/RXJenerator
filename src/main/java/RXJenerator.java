@@ -56,7 +56,11 @@ public class RXJenerator
 	
 	private static final int ONE_SECOND = 1000;
 	private static float throughput_per_second = 10_000;
-	private static long sleep_time = 10;
+	//private static long sleep_time = 10; //nice flat curve
+	//private static long sleep_time = 20; //still nice flat curve
+	//private static long sleep_time = 50; //still nice flat curve
+	//private static long sleep_time = 100; //still nice flat curve
+	private static long sleep_time = 500; //still nice flat curve
 	private static int keys_per_cycle = (int) (throughput_per_second / ONE_SECOND * sleep_time / load_divider * load_compensation); // (10 keys per 1 ms) * 100ms = 1000 keys per cycle
 	private static AtomicInteger number_of_aysnc_cycles_to_run = new AtomicInteger(-1); 
 	private static int number_of_sync_loops_to_run = -1;
