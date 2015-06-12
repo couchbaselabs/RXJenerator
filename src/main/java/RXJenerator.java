@@ -67,7 +67,7 @@ public class RXJenerator
 	private static boolean infinite_cycles = true;
 	private static boolean print_stats_for_infinate_stream = false;
 	private static AtomicInteger complete_cycle_count_for_printing_stats = new AtomicInteger(0); //counter to determine when to print statistics
-	private static AtomicInteger print_counter_rate = new AtomicInteger(100); //if max_cycle is infinite (-1) then run print of stats every ~10k times ... print if complete_cycle_count > print_counter_rate
+	private static AtomicInteger print_counter_rate = new AtomicInteger(10); //if max_cycle is infinite (-1) then run print of stats every ~10k times ... print if complete_cycle_count > print_counter_rate
 	
 	private static boolean force_back_pressure = false;
 	private static boolean force_easy_debug = false;
