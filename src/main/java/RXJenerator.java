@@ -29,9 +29,9 @@ import com.couchbase.client.java.error.CannotRetryException;
 import com.couchbase.client.java.util.retry.RetryBuilder;
 
 //Running with defaults = 14k ops/s
-//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator_9_1_2 -t 5000 -n localhost -l OFF -c 2000
-//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator_9_1_2 -t 5000 -n localhost -l SEVERE -c 2000 -easydebug
-//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator_9_1_2 -t 5000 -n localhost -l SEVERE -c 2000 -forcebackpressure
+//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator -t 5000 -n localhost -l OFF -c 2000
+//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator -t 5000 -n localhost -l SEVERE -c 2000 -easydebug
+//java -cp java_loadgen.jar RXJavaLoadGen.RXJenerator -t 5000 -n localhost -l SEVERE -c 2000 -forcebackpressure
 //can not run 3 instances without lots of backpressure exceptions! -> I may need to maximize to XXk per instance :-(, or maybe choose a longer sleep_time
 
 public class RXJenerator 
@@ -197,8 +197,10 @@ public class RXJenerator
 		//Work out the number of keys to bulk process per sleep_time interval
 		if(run_bulk_write_test && run_bulk_read_test) { 
 			load_divider = 2; //because we have double the load
-			number_of_aysnc_cycles_to_run.set(number_of_aysnc_cycles_to_run.get()*2); //because we need to decrement max_cycles for both reads and writes
-			number_of_sync_loops_to_run = number_of_aysnc_cycles_to_run.get();
+			if(number_of_aysnc_cycles_to_run.get() != -1) {
+				number_of_aysnc_cycles_to_run.set(number_of_aysnc_cycles_to_run.get()*2); //because we need to decrement max_cycles for both reads and writes
+				number_of_sync_loops_to_run = number_of_aysnc_cycles_to_run.get();
+			}
 		}
 		if(LOGGER.getLevel() == Level.OFF || LOGGER.getLevel() == Level.SEVERE) {
 			load_compensation = 1.4f;// if logging is off or at severe - then we don't as much additional load to account for overhead
